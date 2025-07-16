@@ -14,29 +14,14 @@ class TransactionExporter extends Exporter
     public static function getColumns(): array
     {
         return [
-            ExportColumn::make('id')
-                ->label('ID'),
-            
-            ExportColumn::make('key')
-                ->label('Account Key'),
-            
-            ExportColumn::make('receipt')
-                ->label('Receipt'),
-            
+            ExportColumn::make('key'),
+            ExportColumn::make('receipt'),
             ExportColumn::make('value')
-                ->label('Value')
                 ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
-            
-            ExportColumn::make('type')
-                ->label('Type'),
-            
+            ExportColumn::make('type'),
             ExportColumn::make('transaction_date')
-                ->label('Transaction Date')
                 ->formatStateUsing(fn ($state) => $state ? date('d/m/Y H:i:s', strtotime($state)) : ''),
-            
-            ExportColumn::make('description')
-                ->label('Description'),
-            
+            ExportColumn::make('description'),
             ExportColumn::make('user.name')
                 ->label('Created By'),
             

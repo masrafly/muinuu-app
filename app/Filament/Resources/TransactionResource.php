@@ -74,7 +74,7 @@ class TransactionResource extends Resource
             // Export semua data (dengan filter yang aktif)
             ExportAction::make()
                 ->exporter(TransactionExporter::class)
-                ->label('Export ke Excel')
+                ->label('Export to Excel')
                 ->color('success')
                 ->icon('heroicon-o-document-arrow-down'),
         ])

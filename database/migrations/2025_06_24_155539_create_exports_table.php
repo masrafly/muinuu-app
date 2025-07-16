@@ -13,6 +13,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('exporter'); // Class exporter
             $table->integer('total_rows')->default(0);
+            $table->unsignedInteger('processed_rows')->default(0);
+            $table->unsignedInteger('successful_rows')->default(0);
+            $table->timestamp('completed_at')->nullable();
             $table->string('file_disk')->default('local');
             $table->string('file_name')->nullable();
             $table->string('file_path')->nullable();
@@ -26,5 +29,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('exports');
+        
     }
 };

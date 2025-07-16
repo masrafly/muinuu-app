@@ -29,7 +29,7 @@ class UserResource extends Resource
         return $form
             ->schema([
         Forms\Components\TextInput::make('name')
-            ->label('Nama')
+            ->label('Name')
             ->required()
             ->maxLength(255),
 
@@ -46,8 +46,13 @@ class UserResource extends Resource
             ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
             ->maxLength(255),
 
+        Forms\Components\TextInput::make('role')
+            ->label('Role')
+            ->required()
+            ->maxLength(255),
+
         Forms\Components\Toggle::make('is_active')
-            ->label('Aktif')
+            ->label('Active')
             ->required(),
             ]);
     }
