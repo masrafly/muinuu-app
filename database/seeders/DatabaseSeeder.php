@@ -31,13 +31,13 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        // User::create([
-        //     'name' => 'Adnan',
-        //     'email' => 'admin@pol.com',
-        //     'password' => 'adnanlord123', // <-- Anda mengetik plaintext di sini
-        //     'role' => 'admin',
-        //     'is_active' => true,
-        // ]);
+        User::create([
+            'name' => 'Adnan',
+            'email' => 'admin@pol.com',
+            'password' => 'adnanlord123', // <-- Anda mengetik plaintext di sini
+            'role' => 'admin',
+            'is_active' => true,
+        ]);
 
         
         // $this->call(DatabaseSeeder::class);
