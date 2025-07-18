@@ -6,7 +6,7 @@ use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Transaction;
 use App\Models\Account;
 use Filament\Forms\Form;
-use Forms\Components;
+use Filament\Forms\Components;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Illuminate\Support\Str;
