@@ -47,7 +47,7 @@ class TransactionResource extends Resource
                                 'Credit' => 'Credit'
                             ]),
                         Forms\Components\DateTimePicker::make('transaction_date')->required(),
-                        Forms\Components\TextArea::make('description')->required(),
+                        Forms\Components\Textarea::make('description')->required(),
                         Forms\Components\Hidden::make('user_id')
                             ->default(Auth::id()) // Mengisi otomatis dengan ID user yang sedang login
                             ->required() // Pastikan ini diisi
