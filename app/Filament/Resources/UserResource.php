@@ -107,6 +107,12 @@ class UserResource extends Resource
         ];
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->whereRaw('LOWER(role) != ?', ['admin']);
+    }
+
     public static function getPages(): array
     {
         return [
