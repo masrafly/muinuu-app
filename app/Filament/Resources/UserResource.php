@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
+use Illuminate\Validation\ValidationException;
 
 class UserResource extends Resource
 {
@@ -23,6 +25,24 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
     // protected static ?string $navigationLabel = 'Author';
     // protected static ?string $breadcrumb = 'Users';
+
+public static function mutateFormDataBeforeSave(array $data): array
+{
+    if (empty($data['password'])) {
+        Notification::make()
+            ->title('Gagal menyimpan data')
+            ->body('Kolom password tidak boleh kosong.')
+            ->danger()
+            ->send();
+
+        // Opsional: Lempar Exception untuk menghentikan proses simpan
+        throw ValidationException::withMessages([
+            'password' => 'Kolom password wajib diisi.',
+        ]);
+    }
+
+    return $data;
+}
 
     public static function form(Form $form): Form
     {
@@ -42,18 +62,19 @@ class UserResource extends Resource
         Forms\Components\TextInput::make('password')
             ->label('Password')
             ->password()
-            ->required(fn (string $context) => $context === 'create')
+            ->required(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord)
             ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
-            ->maxLength(255),
+            ->maxLength(255)
+            ->hiddenOn('edit'),
 
         Forms\Components\TextInput::make('role')
             ->label('Role')
             ->required()
             ->maxLength(255),
 
-        Forms\Components\Toggle::make('is_active')
-            ->label('Active')
-            ->required(),
+        // Forms\Components\Toggle::make('is_active')
+        //     ->label('Active')
+        //     ->required(),
             ]);
     }
 
@@ -71,8 +92,8 @@ class UserResource extends Resource
             Tables\Columns\TextColumn::make('role') // Tampilkan kolom role juga
                 ->searchable()
                 ->sortable(),
-            Tables\Columns\IconColumn::make('is_active') // Tampilkan status aktif (jika ada)
-                ->boolean(),
+            // Tables\Columns\IconColumn::make('is_active') // Tampilkan status aktif (jika ada)
+            //     ->boolean(),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
