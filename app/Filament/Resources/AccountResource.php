@@ -24,7 +24,14 @@ class AccountResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('key')->required(),
+                        Forms\Components\TextInput::make('key')
+                            ->required()
+                            ->unique(
+                                ignoreRecord: true,
+                            )
+                            ->validationMessages([
+                                'unique' => 'Akun Sudah Terdaftar',
+                            ]),
                         Forms\Components\TextInput::make('name')->required(),
                         Forms\Components\Select::make('element_level')
                             ->required()
@@ -44,6 +51,7 @@ class AccountResource extends Resource
                                 }
                                 return [];
                             })
+                            ->required()
                             ->visible(fn (Forms\Get $get): bool => $get('element_level') === 'breakdown'),
                         Forms\Components\TextInput::make('acc_type')->label('Account Type')->required(),
                         Forms\Components\Hidden::make('user_id')
@@ -61,6 +69,7 @@ class AccountResource extends Resource
                 TextColumn::make('key')->sortable(),
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('element_level'),
+                TextColumn::make('key_parent'),
                 TextColumn::make('acc_type'),
                 TextColumn::make('updated_at'),
                 TextColumn::make('created_at'),
