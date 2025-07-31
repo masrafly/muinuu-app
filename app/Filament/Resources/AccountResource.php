@@ -30,7 +30,7 @@ class AccountResource extends Resource
                                 ignoreRecord: true,
                             )
                             ->validationMessages([
-                                'unique' => 'Akun Sudah Terdaftar',
+                                'unique' => 'Account already exists.',
                             ]),
                         Forms\Components\TextInput::make('name')->required(),
                         Forms\Components\Select::make('element_level')
